@@ -46,6 +46,7 @@ Thumbs.db
 *.env
 application-*.yml
 application-*.properties
+application.properties
 
 # Maven
 target/
