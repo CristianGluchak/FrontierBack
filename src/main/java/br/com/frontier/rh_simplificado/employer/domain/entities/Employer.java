@@ -1,9 +1,9 @@
-package br.com.frontier.rh_simplificado.employer.domain;
+package br.com.frontier.rh_simplificado.employer.domain.entities;
 
+import br.com.frontier.rh_simplificado.employer.domain.commands.CreateEmployerCommand;
 import br.com.frontier.rh_simplificado.shared.AggregateRoot;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
 
 /**
  * @author Cristian Gluchak <cjgc4002@gmail.com>
@@ -29,13 +29,13 @@ public class Employer extends AggregateRoot<EmployerID> {
         this.email = email;
     }
 
-    public static Employer create( String razaoSocial, String nomeFantasia, String cnpj, String email){
+    public static Employer create(CreateEmployerCommand command){
         return Employer.builder()
                 .id(EmployerID.unique())
-                .razaoSocial(razaoSocial)
-                .nomeFantasia(nomeFantasia)
-                .cnpj(cnpj)
-                .email(email)
+                .razaoSocial(command.getRazaoSocial())
+                .nomeFantasia(command.getFantasyName())
+                .cnpj(command.getCnpj())
+                .email(command.getEmail())
                 .build();
     }
 

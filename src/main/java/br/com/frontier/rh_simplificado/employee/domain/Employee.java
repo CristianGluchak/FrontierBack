@@ -1,6 +1,6 @@
 package br.com.frontier.rh_simplificado.employee.domain;
 
-import br.com.frontier.rh_simplificado.employer.domain.EmployerID;
+import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
 import br.com.frontier.rh_simplificado.shared.AggregateRoot;
 import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
 import lombok.Builder;

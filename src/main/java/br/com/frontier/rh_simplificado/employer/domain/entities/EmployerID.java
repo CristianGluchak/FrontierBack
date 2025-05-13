@@ -1,4 +1,4 @@
-package br.com.frontier.rh_simplificado.employer.domain;
+package br.com.frontier.rh_simplificado.employer.domain.entities;
 
 import br.com.frontier.rh_simplificado.shared.Identifier;
 
