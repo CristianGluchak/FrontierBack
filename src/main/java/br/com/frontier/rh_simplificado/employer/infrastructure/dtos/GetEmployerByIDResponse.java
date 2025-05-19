@@ -1,5 +1,6 @@
 package br.com.frontier.rh_simplificado.employer.infrastructure.dtos;
 
+import br.com.frontier.rh_simplificado.employer.infrastructure.queries.GetEmployerByIdOutput;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,4 +28,14 @@ public class GetEmployerByIDResponse {
 
     @JsonProperty(value = "email")
     private final String email;
+
+    public static GetEmployerByIDResponse from(final GetEmployerByIdOutput output){
+        return GetEmployerByIDResponse.builder()
+                .id(output.getId().getValue())
+                .razaoSocial(output.getRazaoSocial())
+                .fantasyName(output.getFantasyName())
+                .email(output.getEmail())
+                .cnpj(output.getCnpj())
+                .build();
+    }
 }
