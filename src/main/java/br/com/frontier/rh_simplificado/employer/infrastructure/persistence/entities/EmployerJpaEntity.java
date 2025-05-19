@@ -19,7 +19,6 @@ import java.util.UUID;
 public class EmployerJpaEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_employer")
     private UUID id;
 
