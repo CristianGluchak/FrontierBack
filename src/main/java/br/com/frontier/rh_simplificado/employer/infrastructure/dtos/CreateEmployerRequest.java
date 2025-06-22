@@ -2,6 +2,7 @@ package br.com.frontier.rh_simplificado.employer.infrastructure.dtos;
 
 import br.com.frontier.rh_simplificado.employer.application.create.CreateEmployerInput;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,15 +15,19 @@ import lombok.Getter;
 public class CreateEmployerRequest {
 
     @JsonProperty(value = "razaoSocial")
+    @Schema(description = "Razão social da empresa", example = "Jhon's store LDT")
     private final String razaoSocial;
 
     @JsonProperty(value = "nomeFantasia")
+    @Schema(description = "Nome fantasia da empresa", example = "Loja do Jhon")
     private final String fantasyName;
 
     @JsonProperty(value = "cnpj")
+    @Schema(description = "CNPJ da empresa", example = "22829957000188")
     private final String cnpj;
 
     @JsonProperty(value = "email")
+    @Schema(description = "Email da empresa", example = "Jhonstore@mail.com")
     private final String email;
 
     public static CreateEmployerInput from(CreateEmployerRequest request){
