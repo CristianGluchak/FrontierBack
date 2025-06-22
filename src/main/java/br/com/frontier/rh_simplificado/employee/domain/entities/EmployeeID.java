@@ -1,7 +1,6 @@
-package br.com.frontier.rh_simplificado.employee.domain;
+package br.com.frontier.rh_simplificado.employee.domain.entities;
 
 import br.com.frontier.rh_simplificado.shared.Identifier;
-import lombok.Getter;
 
 import java.util.UUID;
 
