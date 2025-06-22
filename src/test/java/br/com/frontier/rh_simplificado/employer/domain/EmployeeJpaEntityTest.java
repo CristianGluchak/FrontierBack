@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @since 10/05/2025
  */
 @DisplayName("Testes unitarios da entidade de Empregador")
-class EmployerJpaEntityTest {
+class EmployeeJpaEntityTest {
 
     @Test
     @DisplayName("Deve ser possivel criar um Empregador")

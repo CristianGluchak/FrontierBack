@@ -1,6 +1,7 @@
 package br.com.frontier.rh_simplificado.employer.infrastructure.persistence.entities;
 
 import br.com.frontier.rh_simplificado.employer.domain.entities.Employer;
+import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +34,19 @@ public class EmployerJpaEntity {
 
     @Column(name = "email")
     private String email;
+
+    public static EmployerJpaEntity from(final UUID id){
+        EmployerJpaEntity orm = new EmployerJpaEntity();
+        orm.setId(id);
+        return orm;
+    }
+
+    public static EmployerJpaEntity from(final EmployerID id){
+        EmployerJpaEntity orm = new EmployerJpaEntity();
+        orm.setId(id.getValue());
+        return orm;
+    }
+
 
     public static EmployerJpaEntity from(final Employer dto){
         EmployerJpaEntity orm = new EmployerJpaEntity();
