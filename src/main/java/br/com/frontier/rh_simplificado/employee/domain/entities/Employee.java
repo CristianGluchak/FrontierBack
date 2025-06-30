@@ -1,6 +1,7 @@
 package br.com.frontier.rh_simplificado.employee.domain.entities;
 
 import br.com.frontier.rh_simplificado.employee.domain.commands.CreateEmployeeCommand;
+import br.com.frontier.rh_simplificado.employee.domain.commands.UpdateEmployeeCommand;
 import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
 import br.com.frontier.rh_simplificado.shared.AggregateRoot;
 import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
@@ -59,6 +60,14 @@ public class Employee extends AggregateRoot<EmployeeID> {
                 .status(command.getStatus())
                 .inactivationDate(command.getInactivationDate())
                 .build();
+    }
+
+    public void update(UpdateEmployeeCommand command) {
+        this.name = command.getName();
+        this.cpf = command.getCpf();
+        this.position = command.getPosition();
+        this.hours = command.getHours();
+        this.salary = command.getSalary();
     }
 
 
