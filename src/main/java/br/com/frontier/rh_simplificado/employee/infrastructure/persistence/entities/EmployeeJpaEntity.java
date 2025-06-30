@@ -1,6 +1,8 @@
 package br.com.frontier.rh_simplificado.employee.infrastructure.persistence.entities;
 
 import br.com.frontier.rh_simplificado.employee.domain.entities.Employee;
+import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeID;
+import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
 import br.com.frontier.rh_simplificado.employer.infrastructure.persistence.entities.EmployerJpaEntity;
 import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
 import jakarta.persistence.*;
@@ -67,5 +69,20 @@ public class EmployeeJpaEntity {
         orm.setStatus(dto.getStatus());
         orm.setInactivationDate(dto.getInactivationDate());
         return orm;
+    }
+
+
+    public Employee ToDomain(){
+        return Employee.builder()
+                .employeeID(EmployeeID.from(id))
+                .employerID(EmployerID.from(employer.getId()))
+                .name(name)
+                .cpf(cpf)
+                .position(position)
+                .hours(hours)
+                .salary(salary)
+                .status(status)
+                .inactivationDate(inactivationDate)
+                .build();
     }
 }
