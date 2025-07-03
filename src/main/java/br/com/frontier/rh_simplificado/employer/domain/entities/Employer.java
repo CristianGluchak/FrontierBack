@@ -1,6 +1,7 @@
 package br.com.frontier.rh_simplificado.employer.domain.entities;
 
 import br.com.frontier.rh_simplificado.employer.domain.commands.CreateEmployerCommand;
+import br.com.frontier.rh_simplificado.employer.domain.commands.UpdateEmployerCommand;
 import br.com.frontier.rh_simplificado.shared.AggregateRoot;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,6 +38,13 @@ public class Employer extends AggregateRoot<EmployerID> {
                 .cnpj(command.getCnpj())
                 .email(command.getEmail())
                 .build();
+    }
+
+    public void update(UpdateEmployerCommand command){
+        this.razaoSocial = command.getRazaoSocial();
+        this.nomeFantasia = command.getFantasyName();
+        this.cnpj = command.getCnpj();
+        this.email = command.getEmail();
     }
 
 }
