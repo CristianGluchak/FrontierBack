@@ -58,4 +58,14 @@ public class EmployerJpaEntity {
 
         return orm;
     }
+
+    public Employer toDomain(){
+        return Employer.builder()
+                .id(EmployerID.from(id))
+                .razaoSocial(razaoSocial)
+                .nomeFantasia(fantasyName)
+                .cnpj(cnpj)
+                .email(email)
+                .build();
+    }
 }
