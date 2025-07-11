@@ -1,4 +1,4 @@
-package br.com.frontier.rh_simplificado.salarySheet.application.calculate;
+package br.com.frontier.rh_simplificado.payroll.application.calculate;
 
 import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeID;
 import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;

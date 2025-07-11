@@ -1,10 +1,10 @@
-package br.com.frontier.rh_simplificado.salarySheet.application.calculate;
+package br.com.frontier.rh_simplificado.payroll.application.calculate;
 
 import br.com.frontier.rh_simplificado.employee.domain.entities.Employee;
 import br.com.frontier.rh_simplificado.employee.infrastructure.persistence.entities.EmployeeJpaEntity;
 import br.com.frontier.rh_simplificado.employee.infrastructure.persistence.repositories.EmployeeRepository;
-import br.com.frontier.rh_simplificado.salarySheet.domain.commands.CreatePayrollCommand;
-import br.com.frontier.rh_simplificado.salarySheet.domain.entities.Payroll;
+import br.com.frontier.rh_simplificado.payroll.domain.commands.CreatePayrollCommand;
+import br.com.frontier.rh_simplificado.payroll.domain.entities.Payroll;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
