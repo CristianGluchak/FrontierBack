@@ -1,4 +1,4 @@
-package br.com.frontier.rh_simplificado.salarySheet.domain.entities;
+package br.com.frontier.rh_simplificado.payroll.domain.entities;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

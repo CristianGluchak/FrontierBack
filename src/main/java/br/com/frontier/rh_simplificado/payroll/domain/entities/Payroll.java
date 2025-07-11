@@ -1,9 +1,9 @@
-package br.com.frontier.rh_simplificado.salarySheet.domain.entities;
+package br.com.frontier.rh_simplificado.payroll.domain.entities;
 
 import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeID;
 import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
-import br.com.frontier.rh_simplificado.salarySheet.domain.commands.CreatePayrollCommand;
-import br.com.frontier.rh_simplificado.shared.Identifier;
+import br.com.frontier.rh_simplificado.payroll.domain.commands.CreatePayrollCommand;
+import br.com.frontier.rh_simplificado.shared.AggregateRoot;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,7 +15,7 @@ import java.time.YearMonth;
  * @since 06/07/2025
  */
 @Getter
-public class Payroll extends Identifier<PayrollID> {
+public class Payroll extends AggregateRoot<PayrollID> {
     private EmployeeID employeeID;
     private EmployerID employerID;
     private YearMonth referenceMonth;
