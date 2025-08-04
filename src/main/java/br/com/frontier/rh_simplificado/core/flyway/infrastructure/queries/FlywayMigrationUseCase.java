@@ -1,4 +1,4 @@
-package br.com.frontier.rh_simplificado.flyway.infrastructure.queries;
+package br.com.frontier.rh_simplificado.core.flyway.infrastructure.queries;
 
 import lombok.RequiredArgsConstructor;
 import org.flywaydb.core.Flyway;

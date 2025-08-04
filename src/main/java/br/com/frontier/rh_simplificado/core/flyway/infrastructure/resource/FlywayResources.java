@@ -1,6 +1,6 @@
-package br.com.frontier.rh_simplificado.flyway.infrastructure.resource;
+package br.com.frontier.rh_simplificado.core.flyway.infrastructure.resource;
 
-import br.com.frontier.rh_simplificado.flyway.infrastructure.queries.FlywayMigrationUseCase;
+import br.com.frontier.rh_simplificado.core.flyway.infrastructure.queries.FlywayMigrationUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
