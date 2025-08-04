@@ -1,13 +1,18 @@
 package br.com.frontier.rh_simplificado.payroll.infrastructure.rest;
 
-import br.com.frontier.rh_simplificado.employer.application.create.CreateEmployerUseCase;
-import br.com.frontier.rh_simplificado.employer.application.update.UpdateEmployerUseCase;
+import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeID;
 import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
-import br.com.frontier.rh_simplificado.payroll.infrastructure.dtos.CreatePayrollRequest;
-import br.com.frontier.rh_simplificado.payroll.infrastructure.queries.GetPayrollByIdUseCase;
-import jakarta.validation.Valid;
+import br.com.frontier.rh_simplificado.payroll.application.calculate.CreatePayrollInput;
+import br.com.frontier.rh_simplificado.payroll.application.calculate.CreatePayrollUseCase;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * @author Cristian Gluchak <cjgc4002@gmail.com>
@@ -19,18 +24,20 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PayrollResource {
 
-    private final CreateEmployerUseCase createEmployerUseCase;
+    private final CreatePayrollUseCase createPayrollUseCase;
 
-    private final GetPayrollByIdUseCase getEmployerByIdUseCase;
 
-    private final UpdateEmployerUseCase updateEmployerUseCase;
+    private final Objects empresaLogada;
 
-    @PostMapping("/employer/{id}")
-    public EmployerID calculateSigle(@RequestBody @Valid CreatePayrollRequest request){
-        return createEmployerUseCase.execute(null);
+    @PostMapping("/employee/{id}")
+    public ResponseEntity<Void> calculateSigle(@PathVariable(name = "id") UUID id) {
+
+        createPayrollUseCase.execute(CreatePayrollInput.builder()
+            .employerID(EmployerID.from(""))
+            .employeeID(EmployeeID.from(id))
+            .build());
+        return ResponseEntity.noContent().build();
     }
-
-
 
 
 }
