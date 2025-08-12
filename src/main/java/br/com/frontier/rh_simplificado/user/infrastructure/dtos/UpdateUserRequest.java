@@ -22,7 +22,7 @@ public class UpdateUserRequest {
     private final String name;
 
     @JsonProperty(value = "email")
-    @Schema(description = "Email da empresa", example = "Jhonstore@mail.com")
+    @Schema(description = "Email da Usuario", example = "Jhonstore@mail.com")
     private final String email;
 
     @JsonProperty(value = "password")
