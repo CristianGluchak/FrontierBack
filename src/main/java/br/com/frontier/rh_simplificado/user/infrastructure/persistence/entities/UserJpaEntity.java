@@ -60,6 +60,7 @@ public class UserJpaEntity {
         return orm;
     }
 
+//TODO: implementar encryption para password
 
     public static UserJpaEntity from(final User dto) {
         UserJpaEntity orm = new UserJpaEntity();
