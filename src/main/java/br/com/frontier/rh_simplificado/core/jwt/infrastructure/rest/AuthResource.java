@@ -1,4 +1,4 @@
-package br.com.frontier.rh_simplificado.core.jwt.infrastructure;
+package br.com.frontier.rh_simplificado.core.jwt.infrastructure.rest;
 
 import br.com.frontier.rh_simplificado.core.jwt.infrastructure.dtos.CreateUserWithEnployerRequest;
 import br.com.frontier.rh_simplificado.employer.application.create.CreateEmployerInput;
@@ -7,13 +7,9 @@ import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
 import br.com.frontier.rh_simplificado.user.application.create.CreateUserInput;
 import br.com.frontier.rh_simplificado.user.application.create.CreateUserUseCase;
 import br.com.frontier.rh_simplificado.user.domain.entities.UserID;
-import br.com.frontier.rh_simplificado.user.infrastructure.queries.GetUserByIdUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Cristian Gluchak <cjgc4002@gmail.com>
@@ -28,8 +24,6 @@ public class AuthResource {
     private final CreateUserUseCase createUserUseCase;
 
     private final CreateEmployerUseCase createEmployerUseCase;
-
-    private final GetUserByIdUseCase getUserByIdUseCase;
 
 
     @PostMapping
