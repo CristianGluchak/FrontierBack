@@ -1,4 +1,4 @@
-package br.com.frontier.rh_simplificado.user.infrastructure.queries;
+package br.com.frontier.rh_simplificado.user.infrastructure.queries.getbyid;
 
 import br.com.frontier.rh_simplificado.user.domain.entities.UserID;
 import br.com.frontier.rh_simplificado.user.infrastructure.persistence.repositories.UserRepository;

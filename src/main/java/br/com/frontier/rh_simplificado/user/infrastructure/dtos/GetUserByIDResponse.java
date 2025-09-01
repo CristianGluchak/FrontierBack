@@ -1,6 +1,6 @@
 package br.com.frontier.rh_simplificado.user.infrastructure.dtos;
 
-import br.com.frontier.rh_simplificado.user.infrastructure.queries.GetUserByIdOutput;
+import br.com.frontier.rh_simplificado.user.infrastructure.queries.getbyid.GetUserByIdOutput;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
