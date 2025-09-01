@@ -1,15 +1,16 @@
 package br.com.frontier.rh_simplificado.user.infrastructure.rest;
 
 import br.com.frontier.rh_simplificado.core.jwt.AuthenticatedUser;
+import br.com.frontier.rh_simplificado.core.jwt.JwtUtils;
 import br.com.frontier.rh_simplificado.user.application.create.CreateUserInput;
 import br.com.frontier.rh_simplificado.user.application.create.CreateUserUseCase;
 import br.com.frontier.rh_simplificado.user.application.update.UpdateUserUseCase;
 import br.com.frontier.rh_simplificado.user.domain.entities.UserID;
-import br.com.frontier.rh_simplificado.user.infrastructure.dtos.CreateUserRequest;
-import br.com.frontier.rh_simplificado.user.infrastructure.dtos.GetUserByIDResponse;
-import br.com.frontier.rh_simplificado.user.infrastructure.dtos.UpdateUserRequest;
-import br.com.frontier.rh_simplificado.user.infrastructure.queries.GetUserByIdOutput;
-import br.com.frontier.rh_simplificado.user.infrastructure.queries.GetUserByIdUseCase;
+import br.com.frontier.rh_simplificado.user.infrastructure.dtos.*;
+import br.com.frontier.rh_simplificado.user.infrastructure.queries.getbyid.GetUserByIdOutput;
+import br.com.frontier.rh_simplificado.user.infrastructure.queries.getbyid.GetUserByIdUseCase;
+import br.com.frontier.rh_simplificado.user.infrastructure.queries.getbyemailandpassword.GetUserByEmailAndPasswordOutput;
+import br.com.frontier.rh_simplificado.user.infrastructure.queries.getbyemailandpassword.GetUserByEmailAndPasswordUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,8 @@ public class UserResource {
 
     private final GetUserByIdUseCase getUserByIdUseCase;
 
+    private final GetUserByEmailAndPasswordUseCase getUserByEmailAndPasswordUseCase;
+
     private final AuthenticatedUser loggedUser;
 
     @PostMapping
@@ -52,12 +55,30 @@ public class UserResource {
     public ResponseEntity<Void> update(@PathVariable(name = "id") UUID id,
         @RequestBody @Valid UpdateUserRequest request) {
         updateUserUseCase.execute(UpdateUserRequest.from(request, id));
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
     public GetUserByIDResponse get(@PathVariable UUID id) {
         final GetUserByIdOutput output = getUserByIdUseCase.execute(UserID.from(id));
         return GetUserByIDResponse.from(output);
+    }
+
+    @GetMapping("/auth/login")
+    public LoginUserResponse login(@RequestBody @Valid LoginUserRequest request) {
+        final GetUserByEmailAndPasswordOutput output = getUserByEmailAndPasswordUseCase.execute(
+            request.email(),
+            request.password());
+
+        String token = JwtUtils.gerarTokenExpirationTime1H(output.name(),
+            output.id(),
+            output.employerId());
+
+        return LoginUserResponse.builder()
+            .id(output.id())
+            .name(output.name())
+            .employeerId(output.employerId())
+            .token(token)
+            .build();
     }
 }
