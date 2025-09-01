@@ -1,5 +1,7 @@
 package br.com.frontier.rh_simplificado.core.jwt;
 
+import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
+import br.com.frontier.rh_simplificado.user.domain.entities.UserID;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,7 +28,13 @@ public class JwtUtils {
     private static final Key SECRET_KEY = Keys.hmacShaKeyFor(secret.getBytes());
 
 
-    public static String gerarTokenExpirationTime1H(String username, Map<String, Object> claims) {
+    public static String gerarTokenExpirationTime1H(String username,
+        String userId,
+        String employerId) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userID", userId);
+        claims.put("employerID", employerId);
+
         return Jwts.builder()
             .setSubject(username)
             .addClaims(claims)
