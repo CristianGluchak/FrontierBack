@@ -3,12 +3,14 @@ package br.com.frontier.rh_simplificado.payroll.domain.entities;
 import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeID;
 import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
 import br.com.frontier.rh_simplificado.payroll.domain.commands.CreatePayrollCommand;
+import br.com.frontier.rh_simplificado.payroll.domain.commands.UpdatePayrollCommand;
 import br.com.frontier.rh_simplificado.shared.AggregateRoot;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author Cristian Gluchak <cjgc4002@gmail.com>
@@ -16,6 +18,7 @@ import java.time.YearMonth;
  */
 @Getter
 public class Payroll extends AggregateRoot<PayrollID> {
+
     private EmployeeID employeeID;
     private EmployerID employerID;
     private YearMonth referenceMonth;
@@ -30,15 +33,15 @@ public class Payroll extends AggregateRoot<PayrollID> {
 
     @Builder
     public Payroll(PayrollID id,
-                   EmployeeID employeeID,
-                   EmployerID employerID,
-                   YearMonth referenceMonth,
-                   BigDecimal baseSalary,
-                   BigDecimal grossTotal,
-                   BigDecimal netTotal,
-                   BigDecimal totalDeductions,
-                   BigDecimal inss,
-                   BigDecimal irrf) {
+        EmployeeID employeeID,
+        EmployerID employerID,
+        YearMonth referenceMonth,
+        BigDecimal baseSalary,
+        BigDecimal grossTotal,
+        BigDecimal netTotal,
+        BigDecimal totalDeductions,
+        BigDecimal inss,
+        BigDecimal irrf) {
 
         super(id);
         this.employeeID = employeeID;
@@ -66,16 +69,39 @@ public class Payroll extends AggregateRoot<PayrollID> {
         BigDecimal netTotal = grossTotal.subtract(totalDeductions);
 
         return Payroll.builder()
-                .id(PayrollID.unique())
-                .employeeID(command.getEmployeeID())
-                .employerID(command.getEmployerID())
-                .referenceMonth(YearMonth.now())
-                .baseSalary(command.getBaseSalary())
-                .grossTotal(grossTotal)
-                .netTotal(netTotal)
-                .totalDeductions(totalDeductions)
-                .inss(inss)
-                .irrf(irrf)
-                .build();
+            .id(PayrollID.unique())
+            .employeeID(command.getEmployeeID())
+            .employerID(command.getEmployerID())
+            .referenceMonth(YearMonth.now())
+            .baseSalary(command.getBaseSalary())
+            .grossTotal(grossTotal)
+            .netTotal(netTotal)
+            .totalDeductions(totalDeductions)
+            .inss(inss)
+            .irrf(irrf)
+            .build();
+    }
+
+    public void update(UpdatePayrollCommand command) {
+
+        BigDecimal grossTotal = command.getBaseSalary();
+
+        BigDecimal inss = TaxCalculatorUtils.calculateINSS(command.getBaseSalary());
+
+        BigDecimal irrf = TaxCalculatorUtils.calculateIRRF(command.getBaseSalary(), inss);
+
+        BigDecimal totalDeductions = BigDecimal.ZERO.add(inss).add(irrf);
+
+        BigDecimal netTotal = grossTotal.subtract(totalDeductions);
+
+        this.employeeID = command.getEmployeeID();
+        this.employerID = command.getEmployerID();
+        this.referenceMonth = YearMonth.now();
+        this.baseSalary = command.getBaseSalary();
+        this.grossTotal = grossTotal;
+        this.netTotal = netTotal;
+        this.totalDeductions = totalDeductions;
+        this.inss = inss;
+        this.irrf = irrf;
     }
 }
