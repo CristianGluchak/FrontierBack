@@ -1,5 +1,6 @@
 package br.com.frontier.rh_simplificado.payroll.infrastructure.rest;
 
+import br.com.frontier.rh_simplificado.core.jwt.AuthenticatedUser;
 import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeID;
 import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
 import br.com.frontier.rh_simplificado.payroll.application.calculate.CreatePayrollInput;
@@ -26,14 +27,13 @@ public class PayrollResource {
 
     private final CreatePayrollUseCase createPayrollUseCase;
 
-
-    private final Objects empresaLogada;
+    private final AuthenticatedUser loggedUser;
 
     @PostMapping("/employee/{id}")
     public ResponseEntity<Void> calculateSigle(@PathVariable(name = "id") UUID id) {
 
         createPayrollUseCase.execute(CreatePayrollInput.builder()
-            .employerID(EmployerID.from(""))
+            .employerID(loggedUser.getEmployerID())
             .employeeID(EmployeeID.from(id))
             .build());
         return ResponseEntity.noContent().build();
