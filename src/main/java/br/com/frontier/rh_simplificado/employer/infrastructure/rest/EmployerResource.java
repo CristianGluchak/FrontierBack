@@ -47,6 +47,6 @@ public class EmployerResource {
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable(name = "id") UUID id, @RequestBody @Valid UpdateEmployerRequest request) {
         updateEmployerUseCase.execute(UpdateEmployerRequest.from(request, id));
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 }
