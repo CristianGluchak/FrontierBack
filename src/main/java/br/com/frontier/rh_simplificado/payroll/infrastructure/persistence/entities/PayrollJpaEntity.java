@@ -12,6 +12,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 /**
@@ -24,6 +25,7 @@ import java.util.UUID;
 @Setter
 @Table(name = "payroll")
 public class PayrollJpaEntity {
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM");
 
     @Id
     @Column(name = "id_payroll")
@@ -38,7 +40,7 @@ public class PayrollJpaEntity {
     private EmployerJpaEntity employerID;
 
     @Column(name = "reference_month")
-    private YearMonth referenceMonth;
+    private String referenceMonth;
 
     @Column(name = "base_salary")
     private BigDecimal baseSalary;
@@ -80,7 +82,7 @@ public class PayrollJpaEntity {
         orm.setTotalDeductions(dto.getTotalDeductions());
         orm.setInss(dto.getInss());
         orm.setIrrf(dto.getIrrf());
-        orm.setReferenceMonth(dto.getReferenceMonth());
+        orm.setReferenceMonth(dto.getReferenceMonth().toString());
         orm.setEmployeeID(EmployeeJpaEntity.from(dto.getEmployeeID()));
         orm.setEmployerID(EmployerJpaEntity.from(dto.getEmployerID()));
 
@@ -92,7 +94,7 @@ public class PayrollJpaEntity {
             .id(PayrollID.from(id))
             .employeeID(EmployeeID.from(employeeID.getId()))
             .employerID(EmployerID.from(employerID.getId()))
-            .referenceMonth(referenceMonth)
+            .referenceMonth(YearMonth.parse(referenceMonth, FORMATTER))
             .baseSalary(baseSalary)
             .grossTotal(grossTotal)
             .netTotal(netTotal)
