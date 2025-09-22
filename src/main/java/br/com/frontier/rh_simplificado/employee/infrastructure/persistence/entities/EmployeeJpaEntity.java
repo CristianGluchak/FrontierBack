@@ -57,6 +57,12 @@ public class EmployeeJpaEntity {
     @Column(name = "inactivation_date")
     private LocalDate inactivationDate;
 
+    public static EmployeeJpaEntity from(final EmployeeID id) {
+        EmployeeJpaEntity orm = new EmployeeJpaEntity();
+        orm.setId(id.getValue());
+        return orm;
+    }
+
     public static EmployeeJpaEntity from(final Employee dto) {
         EmployeeJpaEntity orm = new EmployeeJpaEntity();
         orm.setId(dto.getId().getValue());
@@ -72,17 +78,17 @@ public class EmployeeJpaEntity {
     }
 
 
-    public Employee ToDomain(){
+    public Employee ToDomain() {
         return Employee.builder()
-                .employeeID(EmployeeID.from(id))
-                .employerID(EmployerID.from(employer.getId()))
-                .name(name)
-                .cpf(cpf)
-                .position(position)
-                .hours(hours)
-                .salary(salary)
-                .status(status)
-                .inactivationDate(inactivationDate)
-                .build();
+            .employeeID(EmployeeID.from(id))
+            .employerID(EmployerID.from(employer.getId()))
+            .name(name)
+            .cpf(cpf)
+            .position(position)
+            .hours(hours)
+            .salary(salary)
+            .status(status)
+            .inactivationDate(inactivationDate)
+            .build();
     }
 }
