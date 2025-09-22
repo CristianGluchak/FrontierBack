@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  */
 @Getter
 @Builder
-public class CreatePayrollCommand {
+public class CalculatePayrollCommand {
 
     private final EmployeeID employeeID;
     private final EmployerID employerID;

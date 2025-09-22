@@ -3,7 +3,7 @@ package br.com.frontier.rh_simplificado.payroll.application.calculate;
 import br.com.frontier.rh_simplificado.employee.domain.entities.Employee;
 import br.com.frontier.rh_simplificado.employee.infrastructure.persistence.entities.EmployeeJpaEntity;
 import br.com.frontier.rh_simplificado.employee.infrastructure.persistence.repositories.EmployeeRepository;
-import br.com.frontier.rh_simplificado.payroll.domain.commands.CreatePayrollCommand;
+import br.com.frontier.rh_simplificado.payroll.domain.commands.CalculatePayrollCommand;
 import br.com.frontier.rh_simplificado.payroll.domain.commands.UpdatePayrollCommand;
 import br.com.frontier.rh_simplificado.payroll.domain.entities.Payroll;
 import br.com.frontier.rh_simplificado.payroll.infrastructure.persistence.entities.PayrollJpaEntity;
@@ -21,13 +21,13 @@ import static java.lang.String.format;
  */
 @Service
 @RequiredArgsConstructor
-public class CreatePayrollUseCase {
+public class CalculatePayrollUseCase {
 
     private final EmployeeRepository employeeRepository;
 
     private final PayrollRepository payrollRepository;
 
-    public void execute(final CreatePayrollInput input) {
+    public void execute(final CalculatePayrollInput input) {
         Employee employee = employeeRepository.findById(input.getEmployeeID().getValue())
             .map(EmployeeJpaEntity::ToDomain)
             .orElseThrow(() -> new RuntimeException(format(
@@ -53,7 +53,7 @@ public class CreatePayrollUseCase {
             },
             () -> {
 
-                CreatePayrollCommand command = CreatePayrollCommand.builder()
+                CalculatePayrollCommand command = CalculatePayrollCommand.builder()
                     .employeeID(input.getEmployeeID())
                     .employerID(input.getEmployerID())
                     .baseSalary(employee.getSalary())

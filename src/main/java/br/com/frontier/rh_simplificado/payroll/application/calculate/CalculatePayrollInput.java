@@ -12,7 +12,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class CreatePayrollInput {
+public class CalculatePayrollInput {
 
     private final EmployeeID employeeID;
     private final EmployerID employerID;

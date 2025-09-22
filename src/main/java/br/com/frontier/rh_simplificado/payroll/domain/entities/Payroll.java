@@ -2,7 +2,7 @@ package br.com.frontier.rh_simplificado.payroll.domain.entities;
 
 import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeID;
 import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
-import br.com.frontier.rh_simplificado.payroll.domain.commands.CreatePayrollCommand;
+import br.com.frontier.rh_simplificado.payroll.domain.commands.CalculatePayrollCommand;
 import br.com.frontier.rh_simplificado.payroll.domain.commands.UpdatePayrollCommand;
 import br.com.frontier.rh_simplificado.shared.AggregateRoot;
 import lombok.Builder;
@@ -10,7 +10,6 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 
 /**
  * @author Cristian Gluchak <cjgc4002@gmail.com>
@@ -56,7 +55,7 @@ public class Payroll extends AggregateRoot<PayrollID> {
     }
 
 
-    public static Payroll create(CreatePayrollCommand command) {
+    public static Payroll create(CalculatePayrollCommand command) {
 
         BigDecimal grossTotal = command.getBaseSalary();
 
