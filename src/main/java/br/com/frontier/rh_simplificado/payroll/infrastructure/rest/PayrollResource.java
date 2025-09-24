@@ -4,6 +4,7 @@ import br.com.frontier.rh_simplificado.core.jwt.AuthenticatedUser;
 import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeID;
 import br.com.frontier.rh_simplificado.payroll.application.calculate.CalculatePayrollInput;
 import br.com.frontier.rh_simplificado.payroll.application.calculate.CalculatePayrollUseCase;
+import br.com.frontier.rh_simplificado.payroll.application.calculateall.CalculateAllPayrollInput;
 import br.com.frontier.rh_simplificado.payroll.application.calculateall.CalculateAllPayrollUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -37,16 +38,16 @@ public class PayrollResource {
             .employerID(loggedUser.getEmployerID())
             .employeeID(EmployeeID.from(id))
             .build());
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/employee/all")
     public ResponseEntity<Void> calculateAll() {
-        calculateAllPayrollUseCase.execute(CalculatePayrollInput.builder()
+        calculateAllPayrollUseCase.execute(CalculateAllPayrollInput.builder()
             .employerID(loggedUser.getEmployerID())
             .build());
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
 
