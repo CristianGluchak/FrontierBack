@@ -3,6 +3,7 @@ package br.com.frontier.rh_simplificado.payroll.infrastructure.persistence.repos
 import br.com.frontier.rh_simplificado.payroll.infrastructure.persistence.entities.PayrollJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -11,4 +12,6 @@ import java.util.UUID;
  */
 public interface PayrollRepository
     extends JpaRepository<PayrollJpaEntity, UUID>, PayrollRepositoryCustom {
+
+    Optional<PayrollJpaEntity> findByIdAndEmployerID(UUID id, UUID employerID);
 }

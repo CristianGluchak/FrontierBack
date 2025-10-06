@@ -6,12 +6,12 @@ import br.com.frontier.rh_simplificado.payroll.application.calculate.CalculatePa
 import br.com.frontier.rh_simplificado.payroll.application.calculate.CalculatePayrollUseCase;
 import br.com.frontier.rh_simplificado.payroll.application.calculateall.CalculateAllPayrollInput;
 import br.com.frontier.rh_simplificado.payroll.application.calculateall.CalculateAllPayrollUseCase;
+import br.com.frontier.rh_simplificado.payroll.domain.entities.PayrollID;
+import br.com.frontier.rh_simplificado.payroll.infrastructure.dtos.GetPayrollByIDResponse;
+import br.com.frontier.rh_simplificado.payroll.infrastructure.queries.GetPayrollByIdUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -28,6 +28,8 @@ public class PayrollResource {
     private final CalculatePayrollUseCase calculatePayrollUseCase;
 
     private final CalculateAllPayrollUseCase calculateAllPayrollUseCase;
+
+    private final GetPayrollByIdUseCase getPayrollByIDUseCase;
 
     private final AuthenticatedUser loggedUser;
 
@@ -48,6 +50,12 @@ public class PayrollResource {
             .build());
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}")
+    public GetPayrollByIDResponse getByID(@PathVariable(name = "id") UUID id) {
+        return GetPayrollByIDResponse.from(getPayrollByIDUseCase.execute(PayrollID.from(id),
+            loggedUser.getEmployerID()));
     }
 
 
