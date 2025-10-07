@@ -131,7 +131,7 @@
                 </configuration>
             </plugin>
 
-            <!--  evita erro de encoding no application-prod.yml -->
+            <!--  evita erro de encoding no application.yml -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
