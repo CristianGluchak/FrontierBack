@@ -20,11 +20,11 @@ public class GetPayrollByIdUseCase {
     private final PayrollRepository repository;
 
     public GetPayrollByIdOutput execute(final PayrollID id, final EmployerID employerID) {
-        return repository.findByIdAndEmployerID(id.getValue(), employerID.getValue())
+        return repository.findByIdAndEmployer_id(id.getValue(), employerID.getValue())
             .map(entity -> GetPayrollByIdOutput.builder()
                 .id(PayrollID.from(entity.getId()))
-                .employeeID(EmployeeID.from(entity.getEmployeeID().getId()))
-                .employerID(EmployerID.from(entity.getEmployerID().getId()))
+                .employeeID(EmployeeID.from(entity.getEmployee().getId()))
+                .employerID(EmployerID.from(entity.getEmployer().getId()))
                 .referenceMonth(YearMonth.parse(entity.getReferenceMonth()))
                 .baseSalary(entity.getBaseSalary())
                 .grossTotal(entity.getGrossTotal())

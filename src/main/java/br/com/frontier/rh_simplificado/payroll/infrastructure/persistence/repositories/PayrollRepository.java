@@ -13,5 +13,5 @@ import java.util.UUID;
 public interface PayrollRepository
     extends JpaRepository<PayrollJpaEntity, UUID>, PayrollRepositoryCustom {
 
-    Optional<PayrollJpaEntity> findByIdAndEmployerID(UUID id, UUID employerID);
+    Optional<PayrollJpaEntity> findByIdAndEmployer_id(UUID id, UUID employerID);
 }
