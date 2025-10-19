@@ -1,4 +1,4 @@
-package br.com.frontier.rh_simplificado.payroll.infrastructure.queries;
+package br.com.frontier.rh_simplificado.payroll.infrastructure.queries.get;
 
 import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeID;
 import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;

@@ -1,8 +1,7 @@
 package br.com.frontier.rh_simplificado.payroll.infrastructure.dtos;
 
-import br.com.frontier.rh_simplificado.payroll.infrastructure.queries.GetPayrollByIdOutput;
+import br.com.frontier.rh_simplificado.payroll.infrastructure.queries.get.GetPayrollByIdOutput;
 import lombok.Builder;
-import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.YearMonth;
