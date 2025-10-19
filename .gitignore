@@ -44,7 +44,7 @@ Thumbs.db
 # Arquivos sensíveis
 .env
 *.env
-application-*.yml
+application*.yml
 application-*.properties
 application.properties
 

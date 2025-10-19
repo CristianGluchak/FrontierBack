@@ -33,11 +33,11 @@ public class PayrollJpaEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_employee")
-    private EmployeeJpaEntity employeeID;
+    private EmployeeJpaEntity employee;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_employer")
-    private EmployerJpaEntity employerID;
+    private EmployerJpaEntity employer;
 
     @Column(name = "reference_month")
     private String referenceMonth;
@@ -83,8 +83,8 @@ public class PayrollJpaEntity {
         orm.setInss(dto.getInss());
         orm.setIrrf(dto.getIrrf());
         orm.setReferenceMonth(dto.getReferenceMonth().toString());
-        orm.setEmployeeID(EmployeeJpaEntity.from(dto.getEmployeeID()));
-        orm.setEmployerID(EmployerJpaEntity.from(dto.getEmployerID()));
+        orm.setEmployee(EmployeeJpaEntity.from(dto.getEmployeeID()));
+        orm.setEmployer(EmployerJpaEntity.from(dto.getEmployerID()));
 
         return orm;
     }
@@ -92,8 +92,8 @@ public class PayrollJpaEntity {
     public Payroll toDomain() {
         return Payroll.builder()
             .id(PayrollID.from(id))
-            .employeeID(EmployeeID.from(employeeID.getId()))
-            .employerID(EmployerID.from(employerID.getId()))
+            .employeeID(EmployeeID.from(employee.getId()))
+            .employerID(EmployerID.from(employer.getId()))
             .referenceMonth(YearMonth.parse(referenceMonth, FORMATTER))
             .baseSalary(baseSalary)
             .grossTotal(grossTotal)
