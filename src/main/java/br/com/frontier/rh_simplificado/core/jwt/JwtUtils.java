@@ -8,7 +8,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,19 +20,16 @@ import java.util.Map;
  * @author Cristian Gluchak <cristian.gluchak@nexuscloud.com.br>
  * @since 10/08/25
  */
-
-@RequiredArgsConstructor
+@Component
 public class JwtUtils {
 
-    @Value("{jwt.secret}")
-    private static String secret;
+    private final Key secretKey;
 
-    private static final Key SECRET_KEY = Keys.hmacShaKeyFor(secret.getBytes());
+    public JwtUtils(@Value("${jwt.secret}") String secret) {
+        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
 
-
-    public static String gerarTokenExpirationTime1H(String username,
-        String userId,
-        String employerId) {
+    public String gerarTokenExpirationTime1H(String username, String userId, String employerId) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userID", userId);
         claims.put("employerID", employerId);
@@ -40,15 +39,16 @@ public class JwtUtils {
             .addClaims(claims)
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
-            .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
+            .signWith(secretKey, SignatureAlgorithm.HS256)
             .compact();
     }
 
-    public static Claims validarToken(String token) {
+    public Claims validarToken(String token) {
         return Jwts.parserBuilder()
-            .setSigningKey(SECRET_KEY)
+            .setSigningKey(secretKey)
             .build()
             .parseClaimsJws(token)
             .getBody();
     }
 }
+
