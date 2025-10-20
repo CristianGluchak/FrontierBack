@@ -33,7 +33,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        if (path.startsWith("/user/auth/login") ||
+        if (path.startsWith("/auth") ||
             path.startsWith("/v3/api-docs") ||
             path.startsWith("/swagger-ui") ||
             path.startsWith("/monitor")) {
