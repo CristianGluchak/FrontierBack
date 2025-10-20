@@ -29,7 +29,7 @@ public class GetUserByEmailAndPasswordUseCase {
             .id(user.getId().toString())
             .name(user.getName())
             .password(user.getPassword())
-            .employerId(user.getEmployer().toString())
+            .employerId(user.getEmployer().getId().toString())
             .build();
     }
 }

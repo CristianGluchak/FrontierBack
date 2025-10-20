@@ -38,6 +38,8 @@ public class UserResource {
 
     private final AuthenticatedUser loggedUser;
 
+    private final JwtUtils jwtUtils;
+
     @PostMapping
     public UserID create(@RequestBody @Valid CreateUserRequest request) {
 
@@ -64,13 +66,13 @@ public class UserResource {
         return GetUserByIDResponse.from(output);
     }
 
-    @GetMapping("/auth/login")
+    @PostMapping("/auth/login")
     public LoginUserResponse login(@RequestBody @Valid LoginUserRequest request) {
         final GetUserByEmailAndPasswordOutput output = getUserByEmailAndPasswordUseCase.execute(
             request.email(),
             request.password());
 
-        String token = JwtUtils.gerarTokenExpirationTime1H(output.name(),
+        String token = jwtUtils.gerarTokenExpirationTime1H(output.name(),
             output.id(),
             output.employerId());
 

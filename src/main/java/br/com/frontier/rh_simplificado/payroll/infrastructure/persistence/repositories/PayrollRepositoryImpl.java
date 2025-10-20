@@ -31,8 +31,8 @@ public class PayrollRepositoryImpl implements PayrollRepositoryCustom {
         CriteriaQuery<PayrollJpaEntity> query = cb.createQuery(PayrollJpaEntity.class);
         Root<PayrollJpaEntity> root = query.from(PayrollJpaEntity.class);
 
-        Join<PayrollJpaEntity, EmployerJpaEntity> employerJoin = root.join("employerID");
-        Join<PayrollJpaEntity, EmployeeJpaEntity> employeeJoin = root.join("employeeID");
+        Join<PayrollJpaEntity, EmployerJpaEntity> employerJoin = root.join("employer");
+        Join<PayrollJpaEntity, EmployeeJpaEntity> employeeJoin = root.join("employee");
 
         Predicate predicate = cb.and(
             cb.equal(employerJoin.get("id"), employerId),
