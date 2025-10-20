@@ -25,11 +25,14 @@ public class JwtUtils {
 
     private final Key secretKey;
 
+    private static final long ACCESS_TOKEN_EXPIRATION = 1000 * 60 * 60; // 1 hora
+    private static final long REFRESH_TOKEN_EXPIRATION = 1000L * 60 * 60 * 24 * 7; // 7 dias
+
     public JwtUtils(@Value("${jwt.secret}") String secret) {
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String gerarTokenExpirationTime1H(String username, String userId, String employerId) {
+    public String gerarAccessToken(String username, String userId, String employerId) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userID", userId);
         claims.put("employerID", employerId);
@@ -38,7 +41,20 @@ public class JwtUtils {
             .setSubject(username)
             .addClaims(claims)
             .setIssuedAt(new Date())
-            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+            .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION))
+            .signWith(secretKey, SignatureAlgorithm.HS256)
+            .compact();
+    }
+
+    public String gerarRefreshToken(String username, String userId, String employerId) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userID", userId);
+        claims.put("employerID", employerId);
+        return Jwts.builder()
+            .setSubject(username)
+            .addClaims(claims)
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION))
             .signWith(secretKey, SignatureAlgorithm.HS256)
             .compact();
     }
@@ -50,5 +66,10 @@ public class JwtUtils {
             .parseClaimsJws(token)
             .getBody();
     }
+
+    public boolean isExpired(String token) {
+        return validarToken(token).getExpiration().before(new Date());
+    }
 }
+
 

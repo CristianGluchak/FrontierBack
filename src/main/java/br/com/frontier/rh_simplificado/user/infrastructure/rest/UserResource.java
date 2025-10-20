@@ -65,22 +65,4 @@ public class UserResource {
         final GetUserByIdOutput output = getUserByIdUseCase.execute(UserID.from(id));
         return GetUserByIDResponse.from(output);
     }
-
-    @PostMapping("/auth/login")
-    public LoginUserResponse login(@RequestBody @Valid LoginUserRequest request) {
-        final GetUserByEmailAndPasswordOutput output = getUserByEmailAndPasswordUseCase.execute(
-            request.email(),
-            request.password());
-
-        String token = jwtUtils.gerarTokenExpirationTime1H(output.name(),
-            output.id(),
-            output.employerId());
-
-        return LoginUserResponse.builder()
-            .id(output.id())
-            .name(output.name())
-            .employeerId(output.employerId())
-            .token(token)
-            .build();
-    }
 }

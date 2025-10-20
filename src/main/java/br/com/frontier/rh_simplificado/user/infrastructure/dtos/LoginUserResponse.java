@@ -12,8 +12,8 @@ import lombok.Builder;
 public record LoginUserResponse(
 
     @Schema(description = "Token JWT do usuario", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
-    String token,
-
+    String accessToken,
+    String refreshToken,
     @Schema(description = "Nome do usuario", example = "Jhon")
     String name,
 
