@@ -1,5 +1,5 @@
 CREATE TABLE payroll (
-    id_payroll UUID NOT NULL,
+    id_payroll UUID NOT NULL DEFAULT gen_random_uuid(),
     id_employee UUID NOT NULL,
     id_employer UUID NOT NULL,
     reference_month VARCHAR(7) NOT NULL,

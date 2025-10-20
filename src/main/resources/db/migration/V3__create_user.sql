@@ -1,7 +1,7 @@
 CREATE TYPE role AS ENUM ('ADMIN');
 
 CREATE TABLE "user" (
-    id_user     UUID NOT NULL,
+    id_user     UUID NOT NULL DEFAULT gen_random_uuid(),
     name        VARCHAR(100) NOT NULL,
     email       VARCHAR(100) NOT NULL,
     password    VARCHAR(255) NOT NULL,
