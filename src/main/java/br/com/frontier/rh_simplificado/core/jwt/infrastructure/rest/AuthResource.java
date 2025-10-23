@@ -40,7 +40,7 @@ public class AuthResource {
 
     private final JwtUtils jwtUtils;
 
-    @PostMapping
+    @PostMapping("/create-account")
     public UserID create(@RequestBody @Valid CreateUserWithEnployerRequest request) {
 
         CreateEmployerInput employerin = CreateEmployerInput.builder()
