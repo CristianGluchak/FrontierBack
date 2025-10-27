@@ -82,7 +82,7 @@ public class AuthResource {
         return LoginUserResponse.builder()
             .id(output.id())
             .name(output.name())
-            .employeerId(output.employerId())
+            .employerId(output.employerId())
             .accessToken(accessToken)
             .refreshToken(refreshToken)
             .build();
