@@ -21,6 +21,6 @@ public record LoginUserResponse(
     String id,
 
     @Schema(description = "ID do empregador", example = "1")
-    String employeerId
+    String employerId
 ) {
 }
