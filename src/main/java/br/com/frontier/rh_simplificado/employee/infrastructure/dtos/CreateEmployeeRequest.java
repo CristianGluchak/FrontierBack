@@ -4,6 +4,8 @@ import br.com.frontier.rh_simplificado.employee.application.create.CreateEmploye
 import br.com.frontier.rh_simplificado.employer.application.create.CreateEmployerInput;
 import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
 import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
+import br.com.frontier.rh_simplificado.shared.enums.CivilState;
+import br.com.frontier.rh_simplificado.shared.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -20,10 +22,6 @@ import java.util.UUID;
 @Getter
 @Builder
 public class CreateEmployeeRequest {
-
-    @JsonProperty("employer_id")
-    @Schema(description = "ID do empregador", example = "a3f1e234-56b7-4c88-9e89-123456789abc")
-    private final UUID employerID;
 
     @JsonProperty("name")
     @Schema(description = "Nome do empregado", example = "John Doe")
@@ -49,22 +47,59 @@ public class CreateEmployeeRequest {
     @Schema(description = "Situação do empregado", example = "ATIVO")
     private final AtivoInativo status;
 
-    @JsonProperty("inactivation_date")
-    @Schema(description = "Data de inativação do empregado, se houver", example = "2024-12-31")
-    private final LocalDate inactivationDate;
+    @JsonProperty("gender")
+    @Schema(description = "Gênero do empregado", example = "MASCULINO")
+    private final Gender gender;
 
+    @JsonProperty("civilState")
+    @Schema(description = "Estado civil do empregado", example = "SOLTEIRO")
+    private final CivilState civilState;
 
-    public static CreateEmployeeInput from(CreateEmployeeRequest request){
-        return CreateEmployeeInput.builder()
-                .employerID(EmployerID.from(request.getEmployerID()))
-                .name(request.getName())
-                .cpf(request.getCpf())
-                .position(request.getPosition())
-                .hours(request.getHours())
-                .salary(request.getSalary())
-                .status(request.getStatus())
-                .inactivationDate(request.getInactivationDate())
-                .build();
+    @JsonProperty("birthDate")
+    @Schema(description = "Data de nascimento do empregado", example = "1990-01-01")
+    private final LocalDate birthDate;
+
+    @JsonProperty("phone")
+    @Schema(description = "Número de telefone do empregado", example = "(11) 91234-5678")
+    private final String phoneNumber;
+
+    @JsonProperty("email")
+    @Schema(description = "Email do empregado", example = "JhonDoe@mail.com")
+    private final String email;
+
+    @JsonProperty("nationality")
+    @Schema(description = "Nacionalidade do empregado", example = "Brasileiro")
+    private final String nationality;
+
+    @Schema(description = "Endereço do empregado")
+    private final Address address;
+
+    @Getter
+    @Builder
+    public static class Address {
+
+        @JsonProperty("street")
+        @Schema(description = "Rua do endereço", example = "Av. Paulista")
+        private final String street;
+
+        @JsonProperty("number")
+        @Schema(description = "Número do endereço", example = "1000")
+        private final String number;
+
+        @JsonProperty("district")
+        @Schema(description = "Bairro do endereço", example = "Bela Vista")
+        private final String district;
+
+        @JsonProperty("city")
+        @Schema(description = "Cidade do endereço", example = "São Paulo")
+        private final String city;
+
+        @JsonProperty("state")
+        @Schema(description = "Estado do endereço", example = "SP")
+        private final String state;
+
+        @JsonProperty("cep")
+        private final String cep;
     }
 
 }

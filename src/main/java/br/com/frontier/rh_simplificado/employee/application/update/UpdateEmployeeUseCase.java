@@ -1,5 +1,6 @@
 package br.com.frontier.rh_simplificado.employee.application.update;
 
+import br.com.frontier.rh_simplificado.employee.domain.commands.CreateEmployeeCommand;
 import br.com.frontier.rh_simplificado.employee.domain.commands.UpdateEmployeeCommand;
 import br.com.frontier.rh_simplificado.employee.domain.entities.Employee;
 import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeID;
@@ -7,6 +8,8 @@ import br.com.frontier.rh_simplificado.employee.infrastructure.persistence.entit
 import br.com.frontier.rh_simplificado.employee.infrastructure.persistence.repositories.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 import static java.lang.String.format;
 
@@ -24,16 +27,34 @@ public class UpdateEmployeeUseCase {
     public EmployeeID execute(UpdateEmployeeInput input) {
 
         Employee employee = repository.findById(input.getId().getValue())
-                .map(EmployeeJpaEntity::ToDomain)
-                .orElseThrow(() -> new RuntimeException(format("Não foi possivel localizar um funcionario com o id %s", input.getId().getValue())));
+            .map(EmployeeJpaEntity::ToDomain)
+            .orElseThrow(() -> new RuntimeException(format(
+                "Não foi possivel localizar um funcionario com o id %s",
+                input.getId().getValue())));
 
         UpdateEmployeeCommand command = UpdateEmployeeCommand.builder()
-                .name(input.getName())
-                .cpf(input.getCpf())
-                .position(input.getPosition())
-                .hours(input.getHours())
-                .salary(input.getSalary())
-                .build();
+            .name(input.getName())
+            .cpf(input.getCpf())
+            .position(input.getPosition())
+            .hours(input.getHours())
+            .salary(input.getSalary())
+            .gender(input.getGender())
+            .civilState(input.getCivilState())
+            .birthDate(input.getBirthDate())
+            .phoneNumber(input.getPhoneNumber())
+            .email(input.getEmail())
+            .nationality(input.getNationality())
+            .address(Objects.isNull(input.getAddress()) ? null
+                : UpdateEmployeeCommand.Address.builder()
+                .id(input.getAddress().getId())
+                .street(input.getAddress().getStreet())
+                .number(input.getAddress().getNumber())
+                .district(input.getAddress().getDistrict())
+                .city(input.getAddress().getCity())
+                .state(input.getAddress().getState())
+                .cep(input.getAddress().getCep())
+                .build())
+            .build();
 
         employee.update(command);
 
