@@ -1,8 +1,10 @@
 package br.com.frontier.rh_simplificado.employee.infrastructure.rest;
 
 import br.com.frontier.rh_simplificado.core.jwt.AuthenticatedUser;
+import br.com.frontier.rh_simplificado.employee.application.create.CreateEmployeeInput;
 import br.com.frontier.rh_simplificado.employee.application.create.CreateEmployeeUseCase;
 import br.com.frontier.rh_simplificado.employee.application.update.UpdateEmployeeUseCase;
+import br.com.frontier.rh_simplificado.employee.domain.commands.CreateEmployeeCommand;
 import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeID;
 import br.com.frontier.rh_simplificado.employee.infrastructure.dtos.CreateEmployeeRequest;
 import br.com.frontier.rh_simplificado.employee.infrastructure.dtos.FindAllEmployeeResponse;
@@ -11,6 +13,7 @@ import br.com.frontier.rh_simplificado.employee.infrastructure.dtos.UpdateEmploy
 import br.com.frontier.rh_simplificado.employee.infrastructure.queries.findAll.FindAllEmployeeUseCase;
 import br.com.frontier.rh_simplificado.employee.infrastructure.queries.get.GetEmployeeByIdOutput;
 import br.com.frontier.rh_simplificado.employee.infrastructure.queries.get.GetEmployeeByIdUseCase;
+import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -43,7 +47,30 @@ public class EmployeeResource {
 
     @PostMapping
     public EmployeeID create(@RequestBody @Valid CreateEmployeeRequest request) {
-        return createEmployeeUseCase.execute(CreateEmployeeRequest.from(request));
+        return createEmployeeUseCase.execute(CreateEmployeeInput.builder()
+            .employerID(loggedUser.getEmployerID())
+            .name(request.getName())
+            .cpf(request.getCpf())
+            .position(request.getPosition())
+            .hours(request.getHours())
+            .salary(request.getSalary())
+            .status(request.getStatus())
+            .gender(request.getGender())
+            .civilState(request.getCivilState())
+            .birthDate(request.getBirthDate())
+            .phoneNumber(request.getPhoneNumber())
+            .email(request.getEmail())
+            .nationality(request.getNationality())
+            .address(Objects.isNull(request.getAddress()) ? null
+                : CreateEmployeeInput.Address.builder()
+                .street(request.getAddress().getStreet())
+                .number(request.getAddress().getNumber())
+                .district(request.getAddress().getDistrict())
+                .city(request.getAddress().getCity())
+                .state(request.getAddress().getState())
+                .cep(request.getAddress().getCep())
+                .build())
+            .build());
     }
 
     @GetMapping("/{id}")

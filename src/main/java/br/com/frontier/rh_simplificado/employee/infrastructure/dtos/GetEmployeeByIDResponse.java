@@ -1,8 +1,12 @@
 package br.com.frontier.rh_simplificado.employee.infrastructure.dtos;
 
+import br.com.frontier.rh_simplificado.employee.application.update.UpdateEmployeeInput;
+import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeAddressID;
 import br.com.frontier.rh_simplificado.employee.infrastructure.queries.get.GetEmployeeByIdOutput;
 import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
 import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
+import br.com.frontier.rh_simplificado.shared.enums.CivilState;
+import br.com.frontier.rh_simplificado.shared.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -10,6 +14,8 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -23,7 +29,7 @@ public class GetEmployeeByIDResponse {
     @Schema(description = "ID do empregado", example = "a3f1e234-56b7-4c88-9e89-123456789abc")
     private final UUID id;
 
-    @JsonProperty("employer_id")
+    @JsonProperty("employerId")
     @Schema(description = "ID do empregador", example = "d4c3b2a1-7890-4567-8abc-0123456789de")
     private final UUID employerID;
 
@@ -51,21 +57,96 @@ public class GetEmployeeByIDResponse {
     @Schema(description = "Situação do empregado", example = "ATIVO")
     private final AtivoInativo status;
 
-    @JsonProperty("inactivation_date")
+    @JsonProperty("inactivationDate")
     @Schema(description = "Data de inativação do empregado, se houver", example = "2025-12-31")
     private final LocalDate inactivationDate;
 
+    @JsonProperty("gender")
+    @Schema(description = "Gênero do empregado", example = "MASCULINO")
+    private final Gender gender;
+
+    @JsonProperty("civilState")
+    @Schema(description = "Estado civil do empregado", example = "SOLTEIRO")
+    private final CivilState civilState;
+
+    @JsonProperty("birthDate")
+    @Schema(description = "Data de nascimento do empregado", example = "1990-01-01")
+    private final LocalDate birthDate;
+
+    @JsonProperty("phone")
+    @Schema(description = "Número de telefone do empregado", example = "(11) 91234-5678")
+    private final String phoneNumber;
+
+    @JsonProperty("email")
+    @Schema(description = "Email do empregado", example = "JhonDoe@mail.com")
+    private final String email;
+
+    @JsonProperty("nationality")
+    @Schema(description = "Nacionalidade do empregado", example = "Brasileiro")
+    private final String nationality;
+
+    @Schema(description = "Endereço do empregado")
+    private final Address address;
+
+    @Getter
+    @Builder
+    public static class Address {
+
+        @JsonProperty("id")
+        @Schema(description = "ID do endereço", example = "d290f1ee-6c54-4b01-90e6-d701748f0851")
+        private final String id;
+
+        @JsonProperty("street")
+        @Schema(description = "Rua do endereço", example = "Av. Paulista")
+        private final String street;
+
+        @JsonProperty("number")
+        @Schema(description = "Número do endereço", example = "1000")
+        private final String number;
+
+        @JsonProperty("district")
+        @Schema(description = "Bairro do endereço", example = "Bela Vista")
+        private final String district;
+
+        @JsonProperty("city")
+        @Schema(description = "Cidade do endereço", example = "São Paulo")
+        private final String city;
+
+        @JsonProperty("state")
+        @Schema(description = "Estado do endereço", example = "SP")
+        private final String state;
+
+        @JsonProperty("cep")
+        private final String cep;
+    }
+
     public static GetEmployeeByIDResponse from(final GetEmployeeByIdOutput output) {
         return GetEmployeeByIDResponse.builder()
-                .id(output.getId().getValue())
-                .employerID(output.getEmployerID().getValue())
-                .name(output.getName())
-                .cpf(output.getCpf())
-                .position(output.getPosition())
-                .hours(output.getHours())
-                .salary(output.getSalary())
-                .status(output.getStatus())
-                .inactivationDate(output.getInactivationDate())
-                .build();
+            .id(output.getId().getValue())
+            .employerID(output.getEmployerID().getValue())
+            .name(output.getName())
+            .cpf(output.getCpf())
+            .position(output.getPosition())
+            .hours(output.getHours())
+            .salary(output.getSalary())
+            .status(output.getStatus())
+            .inactivationDate(output.getInactivationDate())
+            .gender(output.getGender())
+            .civilState(output.getCivilState())
+            .birthDate(output.getBirthDate())
+            .phoneNumber(output.getPhoneNumber())
+            .email(output.getEmail())
+            .nationality(output.getNationality())
+            .address(Objects.isNull(output.getAddress()) ? null
+                : GetEmployeeByIDResponse.Address.builder()
+                .id(String.valueOf(output.getAddress().getId()))
+                .street(output.getAddress().getStreet())
+                .number(output.getAddress().getNumber())
+                .district(output.getAddress().getDistrict())
+                .city(output.getAddress().getCity())
+                .state(output.getAddress().getState())
+                .cep(output.getAddress().getCep())
+                .build())
+            .build();
     }
 }

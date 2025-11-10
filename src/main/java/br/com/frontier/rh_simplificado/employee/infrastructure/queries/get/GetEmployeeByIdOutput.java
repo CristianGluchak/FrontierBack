@@ -1,8 +1,12 @@
 package br.com.frontier.rh_simplificado.employee.infrastructure.queries.get;
 
+import br.com.frontier.rh_simplificado.employee.application.update.UpdateEmployeeInput;
+import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeAddressID;
 import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeID;
 import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
 import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
+import br.com.frontier.rh_simplificado.shared.enums.CivilState;
+import br.com.frontier.rh_simplificado.shared.enums.Gender;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -33,4 +37,36 @@ public class GetEmployeeByIdOutput {
     private final AtivoInativo status;
 
     private final LocalDate inactivationDate;
+
+    private final Gender gender;
+
+    private final CivilState civilState;
+
+    private final LocalDate birthDate;
+
+    private final String phoneNumber;
+
+    private final String email;
+
+    private final String nationality;
+
+    private final Address address;
+
+    @Getter
+    @Builder
+    public static class Address {
+        private final EmployeeAddressID id;
+
+        private final String street;
+
+        private final String number;
+
+        private final String district;
+
+        private final String city;
+
+        private final String state;
+
+        private final String cep;
+    }
 }

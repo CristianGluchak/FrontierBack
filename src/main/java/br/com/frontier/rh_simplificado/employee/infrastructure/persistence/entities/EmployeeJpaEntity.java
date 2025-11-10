@@ -5,6 +5,9 @@ import br.com.frontier.rh_simplificado.employee.domain.entities.EmployeeID;
 import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
 import br.com.frontier.rh_simplificado.employer.infrastructure.persistence.entities.EmployerJpaEntity;
 import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
+import br.com.frontier.rh_simplificado.shared.enums.CivilState;
+import br.com.frontier.rh_simplificado.shared.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +16,7 @@ import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -57,6 +61,31 @@ public class EmployeeJpaEntity {
     @Column(name = "inactivation_date")
     private LocalDate inactivationDate;
 
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    private Gender gender;
+
+    @Column(name = "civil_state")
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    private CivilState civilState;
+
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "nationality")
+    private String nationality;
+
+    @JsonManagedReference
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private EmployeeAddressJpaEntity address;
+
     public static EmployeeJpaEntity from(final EmployeeID id) {
         EmployeeJpaEntity orm = new EmployeeJpaEntity();
         orm.setId(id.getValue());
@@ -74,6 +103,21 @@ public class EmployeeJpaEntity {
         orm.setSalary(dto.getSalary());
         orm.setStatus(dto.getStatus());
         orm.setInactivationDate(dto.getInactivationDate());
+        orm.setGender(dto.getGender());
+        orm.setCivilState(dto.getCivilState());
+        orm.setBirthDate(dto.getBirthDate());
+        orm.setPhoneNumber(dto.getPhoneNumber());
+        orm.setEmail(dto.getEmail());
+        orm.setNationality(dto.getNationality());
+
+        orm.setAddress(Optional.ofNullable(dto.getAddress())
+            .map(EmployeeAddressJpaEntity::from)
+            .map(address -> {
+                address.setEmployee(orm);
+                return address;
+            })
+            .orElse(null));
+
         return orm;
     }
 
@@ -89,6 +133,15 @@ public class EmployeeJpaEntity {
             .salary(salary)
             .status(status)
             .inactivationDate(inactivationDate)
+            .gender(gender)
+            .civilState(civilState)
+            .birthDate(birthDate)
+            .phoneNumber(phoneNumber)
+            .email(email)
+            .nationality(nationality)
+            .address(Optional.ofNullable(address)
+                .map(EmployeeAddressJpaEntity::toDomain)
+                .orElse(null))
             .build();
     }
 }
