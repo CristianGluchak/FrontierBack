@@ -1,5 +1,6 @@
 package br.com.frontier.rh_simplificado.user.infrastructure.dtos;
 
+import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
 import br.com.frontier.rh_simplificado.user.infrastructure.queries.getbyid.GetUserByIdOutput;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,11 +27,16 @@ public class GetUserByIDResponse {
     @Schema(description = "Email do Usuario", example = "Jhonstore@mail.com")
     private final String email;
 
+    @JsonProperty(value = "status")
+    @Schema(description = "Status do usuario", example = "ATIVO")
+    private final AtivoInativo status;
+
     public static GetUserByIDResponse from(final GetUserByIdOutput output) {
         return GetUserByIDResponse.builder()
             .id(output.getId().getValue())
             .email(output.getEmail())
             .name(output.getName())
+            .status(output.getStatus())
             .build();
     }
 }

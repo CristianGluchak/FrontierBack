@@ -2,6 +2,7 @@ package br.com.frontier.rh_simplificado.user.domain.entities;
 
 import br.com.frontier.rh_simplificado.employer.domain.entities.EmployerID;
 import br.com.frontier.rh_simplificado.shared.AggregateRoot;
+import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
 import br.com.frontier.rh_simplificado.shared.enums.Role;
 import br.com.frontier.rh_simplificado.user.domain.commands.CreateUserCommand;
 import br.com.frontier.rh_simplificado.user.domain.commands.UpdateUserCommand;
@@ -25,6 +26,8 @@ public class User extends AggregateRoot<UserID> {
 
     private EmployerID employerID;
 
+    private AtivoInativo status;
+
 
     @Builder
     public User(final UserID id,
@@ -32,13 +35,14 @@ public class User extends AggregateRoot<UserID> {
         final String password,
         final String email,
         final Role role,
-        final EmployerID employerID) {
+        final EmployerID employerID, final AtivoInativo status) {
         super(id);
         this.name = name;
         this.password = password;
         this.email = email;
         this.role = role;
         this.employerID = employerID;
+        this.status = status;
     }
 
     public static User create(CreateUserCommand command) {
@@ -49,13 +53,14 @@ public class User extends AggregateRoot<UserID> {
             .email(command.getEmail())
             .role(Role.ADMIN)
             .employerID(command.getEmployerID())
+            .status(AtivoInativo.ATIVO)
             .build();
     }
 
     public void update(UpdateUserCommand command) {
         this.name = command.getName();
-        this.password = command.getPassword();
         this.email = command.getEmail();
+        this.status = command.getStatus();
     }
 
 }

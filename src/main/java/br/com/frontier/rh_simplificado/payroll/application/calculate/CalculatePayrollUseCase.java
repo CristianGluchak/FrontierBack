@@ -8,6 +8,7 @@ import br.com.frontier.rh_simplificado.payroll.domain.commands.UpdatePayrollComm
 import br.com.frontier.rh_simplificado.payroll.domain.entities.Payroll;
 import br.com.frontier.rh_simplificado.payroll.infrastructure.persistence.entities.PayrollJpaEntity;
 import br.com.frontier.rh_simplificado.payroll.infrastructure.persistence.repositories.PayrollRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import static java.lang.String.format;
  * @since 06/07/2025
  */
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CalculatePayrollUseCase {
 

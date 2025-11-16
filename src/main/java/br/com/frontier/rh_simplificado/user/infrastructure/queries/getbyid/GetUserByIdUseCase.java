@@ -21,6 +21,7 @@ public class GetUserByIdUseCase {
                 .id(UserID.from(entity.getId()))
                 .email(entity.getEmail())
                 .name(entity.getName())
+                .status(entity.getStatus())
                 .build())
             .orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
     }

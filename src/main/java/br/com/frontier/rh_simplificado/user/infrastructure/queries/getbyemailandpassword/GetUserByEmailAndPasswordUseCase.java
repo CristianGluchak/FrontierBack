@@ -1,10 +1,13 @@
 package br.com.frontier.rh_simplificado.user.infrastructure.queries.getbyemailandpassword;
 
+import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
 import br.com.frontier.rh_simplificado.user.infrastructure.persistence.entities.UserJpaEntity;
 import br.com.frontier.rh_simplificado.user.infrastructure.persistence.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.ApplicationScope;
+
+import java.util.Objects;
 
 /**
  * @author Cristian Gluchak <cristian.gluchak@nexuscloud.com.br>
@@ -22,8 +25,8 @@ public class GetUserByEmailAndPasswordUseCase {
     public GetUserByEmailAndPasswordOutput execute(String name, String password) {
         final UserJpaEntity user = repository.findByEmailAndPassword(name, password);
 
-        if (user == null) {
-            throw new RuntimeException("Usuario não encontrado");
+        if (user == null || Objects.equals(user.getStatus(), AtivoInativo.INATIVO)) {
+            throw new RuntimeException("Usuario não encontrado ou inativado");
         }
         return GetUserByEmailAndPasswordOutput.builder()
             .id(user.getId().toString())

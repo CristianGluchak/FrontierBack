@@ -1,5 +1,6 @@
 package br.com.frontier.rh_simplificado.user.application.update;
 
+import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
 import br.com.frontier.rh_simplificado.user.domain.entities.UserID;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +16,7 @@ public class UpdateUserInput {
 
     private String name;
 
-    private String password;
-
     private String email;
+
+    private AtivoInativo status;
 }

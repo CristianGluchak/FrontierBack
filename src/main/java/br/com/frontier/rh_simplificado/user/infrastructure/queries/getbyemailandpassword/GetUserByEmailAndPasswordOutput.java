@@ -1,5 +1,6 @@
 package br.com.frontier.rh_simplificado.user.infrastructure.queries.getbyemailandpassword;
 
+import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
 import lombok.Builder;
 
 /**

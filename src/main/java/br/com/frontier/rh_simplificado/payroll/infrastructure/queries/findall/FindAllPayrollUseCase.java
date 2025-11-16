@@ -3,6 +3,7 @@ package br.com.frontier.rh_simplificado.payroll.infrastructure.queries.findall;
 import br.com.frontier.rh_simplificado.payroll.infrastructure.persistence.entities.PayrollJpaEntity;
 import br.com.frontier.rh_simplificado.payroll.infrastructure.persistence.repositories.PayrollRepository;
 import br.com.frontier.rh_simplificado.payroll.infrastructure.persistence.repositories.PayrollSpecification;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class FindAllPayrollUseCase {
 
@@ -24,8 +26,6 @@ public class FindAllPayrollUseCase {
 
         if (referenceMonth != null && !referenceMonth.isBlank()) {
             spec = spec.and(PayrollSpecification.byReferenceMonth(referenceMonth));
-        } else {
-            spec = spec.and(PayrollSpecification.byCurrentMonth());
         }
 
         return payrollRepository.findAll(spec, pageable)

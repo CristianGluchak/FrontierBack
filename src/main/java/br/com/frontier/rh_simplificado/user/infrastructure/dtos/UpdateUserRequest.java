@@ -1,5 +1,6 @@
 package br.com.frontier.rh_simplificado.user.infrastructure.dtos;
 
+import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
 import br.com.frontier.rh_simplificado.user.application.update.UpdateUserInput;
 import br.com.frontier.rh_simplificado.user.domain.entities.UserID;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,16 +26,16 @@ public class UpdateUserRequest {
     @Schema(description = "Email da Usuario", example = "Jhonstore@mail.com")
     private final String email;
 
-    @JsonProperty(value = "password")
-    @Schema(description = "Senha do usuario", example = "123456")
-    private final String password;
+    @JsonProperty(value = "status")
+    @Schema(description = "Status do usuario", example = "ATIVO")
+    private AtivoInativo status;
 
     public static UpdateUserInput from(UpdateUserRequest request, UUID id) {
         return UpdateUserInput.builder()
             .id(UserID.from(id))
             .name(request.getName())
             .email(request.getEmail())
-            .password(request.getPassword())
+            .status(request.getStatus())
             .build();
     }
 

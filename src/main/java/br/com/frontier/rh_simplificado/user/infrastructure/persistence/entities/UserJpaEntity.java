@@ -48,6 +48,11 @@ public class UserJpaEntity {
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private Role role;
 
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    private AtivoInativo status;
+
     public static UserJpaEntity from(final UUID id) {
         UserJpaEntity orm = new UserJpaEntity();
         orm.setId(id);
@@ -60,8 +65,6 @@ public class UserJpaEntity {
         return orm;
     }
 
-//TODO: implementar encryption para password
-
     public static UserJpaEntity from(final User dto) {
         UserJpaEntity orm = new UserJpaEntity();
         orm.setId(dto.getId().getValue());
@@ -69,6 +72,7 @@ public class UserJpaEntity {
         orm.setPassword(dto.getPassword());
         orm.setEmail(dto.getEmail());
         orm.setRole(dto.getRole());
+        orm.setStatus(dto.getStatus());
         orm.setEmployer(EmployerJpaEntity.from(dto.getEmployerID()));
 
         return orm;
@@ -81,6 +85,8 @@ public class UserJpaEntity {
             .password(password)
             .role(role)
             .email(email)
+            .status(status)
+            .employerID(EmployerID.from(employer.getId()))
             .build();
     }
 }

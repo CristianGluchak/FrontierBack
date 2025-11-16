@@ -15,7 +15,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,12 +70,15 @@ public class PayrollResource {
 
     @GetMapping
     public Page<FindAllPayrollResponse> list(
-        @Parameter(description = "Reference month in format yyyy-MM (optional)") @RequestParam(required = false) String referenceMonth,
+        @RequestParam(required = false) String referenceMonth,
         Pageable pageable
     ) {
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+            Sort.by(Sort.Direction.DESC, "referenceMonth"));
+
         UUID employerId = loggedUser.getEmployerID().getValue();
 
-        return findAllPayrollUseCase.execute(employerId, referenceMonth, pageable)
+        return findAllPayrollUseCase.execute(employerId, referenceMonth, sortedPageable)
             .map(FindAllPayrollResponse::fromOutput);
     }
 
