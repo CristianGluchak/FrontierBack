@@ -1,0 +1,62 @@
+# Nome da aplicacao
+spring:
+  application:
+    name: rh-simplificado
+
+
+
+  # Configuracao do banco de dados
+  datasource:
+    url: jdbc:postgresql://localhost:5432/frontier
+    username: root
+    password: root
+
+  jpa:
+    # Definindo politica de criacao/alteracao do schema
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: rh
+
+  # Flyway para versionamento de banco
+  flyway:
+    enabled: true
+    migrate-on-start: false
+    default-schema: rh
+    schemas: rh
+    create-schemas: false
+    locations: classpath:db/migration
+
+  # Usuario padrao para autenticacao basica
+  security:
+    user:
+      name: admin
+      password: admin123
+    # Rotas que nao precisam de autenticacao
+
+# Porta da aplicacao
+server:
+  port: 8080
+
+# Health Check
+management:
+  endpoints:
+    web:
+      base-path: /monitor
+      exposure:
+        include: health
+# Para acessar: http://localhost:8080/monitor/health
+
+# JWT Authentication
+jwt:
+  secret: g1mHHgNH7gVaDgMju7qjHdVY7fs9YZ4V
+
+# Swagger acessivel: http://localhost:8080/swagger-ui.html
+
+
+logging:
+  level:
+    org.springframework.security: DEBUG

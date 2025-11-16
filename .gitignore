@@ -42,11 +42,7 @@ build/
 Thumbs.db
 
 # Arquivos sensíveis
-.env
-*.env
-application*.yml
-application-*.properties
-application.properties
+
 
 # Maven
 target/
