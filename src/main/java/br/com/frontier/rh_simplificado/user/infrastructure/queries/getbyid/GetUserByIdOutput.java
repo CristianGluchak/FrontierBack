@@ -1,5 +1,6 @@
 package br.com.frontier.rh_simplificado.user.infrastructure.queries.getbyid;
 
+import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
 import br.com.frontier.rh_simplificado.user.domain.entities.UserID;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,4 +18,6 @@ public class GetUserByIdOutput {
     private final String name;
 
     private final String email;
+
+    private final AtivoInativo status;
 }

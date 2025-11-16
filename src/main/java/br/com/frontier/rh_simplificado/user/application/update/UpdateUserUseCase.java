@@ -30,8 +30,8 @@ public class UpdateUserUseCase {
 
         UpdateUserCommand command = UpdateUserCommand.builder()
             .name(input.getName())
-            .password(input.getPassword())
             .email(input.getEmail())
+            .status(input.getStatus())
             .build();
 
         user.update(command);

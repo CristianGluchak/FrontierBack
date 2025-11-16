@@ -1,5 +1,6 @@
 package br.com.frontier.rh_simplificado.user.domain.commands;
 
+import br.com.frontier.rh_simplificado.shared.enums.AtivoInativo;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,7 +13,7 @@ import lombok.Getter;
 public class UpdateUserCommand {
     private String name;
 
-    private String password;
-
     private String email;
+
+    private AtivoInativo status;
 }
