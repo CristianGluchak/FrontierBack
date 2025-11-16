@@ -12,3 +12,5 @@ services:
       - "postgres"
       - "-c"
       - "wal_level=logical"
+    volumes:
+      - ./src/main/resources/db/migration:/docker-entrypoint-initdb.d

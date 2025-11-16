@@ -1,7 +1,7 @@
 # Nome da aplicacao
 spring:
   application:
-    name: rh-simplificado
+    name: frontier
 
 
 
@@ -19,14 +19,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: rh
+        default_schema: frontier
 
   # Flyway para versionamento de banco
   flyway:
     enabled: true
     migrate-on-start: false
-    default-schema: rh
-    schemas: rh
+    default-schema: frontier
+    schemas: frontier
     create-schemas: false
     locations: classpath:db/migration
 
