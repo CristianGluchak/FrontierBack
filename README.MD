@@ -98,5 +98,11 @@ src/main/resources/
   application.yml # Configuração principal
 ```
 
+## Usuário de exemplo para acesso
+
+- **Usuário:** Admin Tech
+- **E-mail:** admin.tech@techsolutions.com
+- **Senha:** senha123
+
 ## Contato
 Dúvidas ou sugestões? Abra uma issue ou envie um e-mail para o mantenedor do projeto.
