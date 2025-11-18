@@ -7,12 +7,12 @@ INSERT INTO employer (id_employer, fantasyname, razaosocial, cnpj, email) VALUES
   ('00000000-0000-0000-0000-000000000005', 'SaudeMais', 'SaudeMais Hospitalar', '33445566000155', 'contato@saudemais.com');
 
 -- Populando tabela employee
-INSERT INTO employee (id_employee, id_employer, name, cpf, position, hours, salary, status, inactivation_date) VALUES
-  ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', 'João Silva', '12345678901', 'Desenvolvedor', '40', 5000.00, 'ATIVO', NULL),
-  ('10000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000002', 'Maria Souza', '98765432100', 'Engenheira Agrônoma', '44', 6200.00, 'ATIVO', NULL),
-  ('10000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000003', 'Carlos Lima', '11223344556', 'Mestre de Obras', '40', 4800.00, 'ATIVO', NULL),
-  ('10000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000004', 'Ana Paula', '22334455667', 'Professora', '30', 3500.00, 'ATIVO', NULL),
-  ('10000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000005', 'Roberto Costa', '33445566778', 'Enfermeiro', '36', 4200.00, 'ATIVO', NULL);
+INSERT INTO employee (id_employee, id_employer, name, cpf, position, hours, salary, status, inactivation_date, gender, civil_state, email) VALUES
+('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', 'João Silva', '12345678901', 'Desenvolvedor', '40', 5000.00, 'ATIVO', NULL, 'MASCULINO', 'SOLTEIRO', 'joao.silva@techsolutions.com'),
+('10000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000002', 'Maria Souza', '98765432100', 'Engenheira Agrônoma', '44', 6200.00, 'ATIVO', NULL, 'FEMININO', 'CASADO', 'maria.souza@agromais.com'),
+('10000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000003', 'Carlos Lima', '11223344556', 'Mestre de Obras', '40', 4800.00, 'ATIVO', NULL, 'MASCULINO', 'CASADO', 'carlos.lima@alpha.com'),
+('10000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000004', 'Ana Paula', '22334455667', 'Professora', '30', 3500.00, 'ATIVO', NULL, 'FEMININO', 'SOLTEIRO', 'ana.paula@educapro.com'),
+('10000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000005', 'Roberto Costa', '33445566778', 'Enfermeiro', '36', 4200.00, 'ATIVO', NULL, 'MASCULINO', 'DIVORCIADO', 'roberto.costa@saudemais.com');
 
 -- Populando tabela user
 INSERT INTO "user" (id_user, name, email, password, id_employer, role) VALUES
